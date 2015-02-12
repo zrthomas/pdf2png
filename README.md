@@ -2,16 +2,16 @@ pdf2png.js
 ============
 
 Install:
-npm install pdf2png
+npm install pdf2png-mp
 
-This is fork another project, that can convert many-page .pdf file.
+This is fork another project, that can convert many-page .pdf file. (https://github.com/thnew/Pdf2Png)
 
 This project uses ghostscript, but there's no need to install it (if you use windows).
 If you want the module to use a local installation of ghostscript, set the option useLocalGhostscript true.
 
 Tested on Windows/Tested on AZURE
+Tested Ubuntu 14.04
 
-Not tested on linux!
 If you want to use it with linux, you may replace the ghostscript-executable with something that works with linux.
 Or you install ghostscript for linux.
 http://www.ghostscript.com/
@@ -42,11 +42,7 @@ pdf2png.convert("./example.pdf", { quality: 300 }, function(resp){
                 console.log("The file "+index+" was saved!");
             }
         });
-
-
-
     });
-
 });
 
 // Most simple example

@@ -1,6 +1,6 @@
 {
-  "name": "pdf2png",
-  "version": "1.0.5",
+  "name": "pdf2png-mp",
+  "version": "0.5.2",
   "description": "Takes a PDF-document and converts and delivers a PNG",
   "engine": "node >= 0.6.0",
   "main": "./lib/pdf2png.js",
@@ -11,13 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:thnew/Pdf2Png.git"
+    "url": "git@github.com:Inkognitoo/Pdf2Png.git"
   },
-  "homepage": "https://github.com/thnew/Pdf2Png",
+  "homepage": "https://github.com/Inkognitoo/Pdf2Png",
   "bugs": {
-    "url": "https://github.com/thnew/Pdf2Png/issues"
+    "url": "https://github.com/Inkognitoo/Pdf2Png/issues"
   },
-  "_id": "pdf2png@1.0.5",
   "dist": {
     "shasum": "9917d09667f6885e0aad2d7d88ddef89d3843d8b",
     "tarball": "http://registry.npmjs.org/pdf2png/-/pdf2png-1.0.5.tgz"
@@ -25,16 +24,28 @@
   "_from": "pdf2png@",
   "_npmVersion": "1.4.3",
   "_npmUser": {
-    "name": "thnew",
-    "email": "thomasheigl2@gmail.com"
+    "name": "inkognitoo",
+    "email": "inkognitoo92@yandex.ru"
   },
   "maintainers": [
-    {
-      "name": "thnew",
-      "email": "thomasheigl2@gmail.com"
-    }
+    "inkognitoo <inkognitoo92@yandex.ru>"
   ],
-  "directories": {},
+  "directories": {
+    "test": "test"
+  },
   "_shasum": "9917d09667f6885e0aad2d7d88ddef89d3843d8b",
-  "_resolved": "https://registry.npmjs.org/pdf2png/-/pdf2png-1.0.5.tgz"
+  "_resolved": "https://registry.npmjs.org/pdf2png/-/pdf2png-1.0.5.tgz",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "convert",
+    "pdf",
+    "to",
+    "png",
+    "image"
+  ],
+  "author": "inkognitoo"
+
 }
