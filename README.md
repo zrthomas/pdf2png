@@ -4,6 +4,8 @@ pdf2png.js
 Install:
 npm install pdf2png
 
+This is fork another project, that can convert many-page .pdf file.
+
 This project uses ghostscript, but there's no need to install it (if you use windows).
 If you want the module to use a local installation of ghostscript, set the option useLocalGhostscript true.
 
