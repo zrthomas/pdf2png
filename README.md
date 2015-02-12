@@ -19,6 +19,36 @@ http://www.ghostscript.com/
 here some examples how to use:
 
 ```javascript
+// Many page example
+pdf2png.convert("./example.pdf", { quality: 300 }, function(resp){
+    if(!resp.success)
+    {
+        console.log("Something went wrong: " + resp.error);
+
+        return;
+    }
+
+    console.log("Yayy the pdf got converted, now I'm gonna save it!");
+
+    var fs = require('fs');
+
+    resp.data.forEach(function(item, index) {
+
+        fs.writeFile("./example_simple"+index+".png", item, function (err) {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("The file "+index+" was saved!");
+            }
+        });
+
+
+
+    });
+
+});
+
 // Most simple example
 pdf2png.convert(__dirname + "/example.pdf", function(resp){
 	if(!resp.success)
