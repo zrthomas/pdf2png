@@ -11,7 +11,7 @@ export default class PDFConvert {
     options: any;
     source: Buffer | string;
     tempLocation: string | undefined;
-    ghostscriptPath = path.join(path.resolve('./'), "executables", "ghostScript");
+    ghostscriptPath = path.join(__dirname, "executables", "ghostScript");
 
     /**
      * Constructs a new Convert Object
