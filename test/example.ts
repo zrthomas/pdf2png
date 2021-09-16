@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from "fs";
-import PDFConvert from "../src/pdf2png";
+import PDFConvert from "../src";
 
 
 const buffer = readFileSync("multipage.pdf");
