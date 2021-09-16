@@ -14,24 +14,14 @@ This version uses typescript and promises to greatly simplify usage since the ol
 ---
 ## Setup
 ### Windows
-No additional setup is needed for Windows
+No additional setup is needed for Windows, ghostscript is included with this package
 
 ### Linux
-If you want to use it with linux, you will need to install ghostscript and pass the executable location as the second argument to the constructor.
-If ghostscript is installed globaly and can be accessed by simply specifying "gs" in a shell terminal, then pass "false" to the argument
-Here is an example if you install ghostscript using debian/ubuntu apt and its accessable globally:
+If you want to use it with linux, you will need to install ghostscript via your package manager.
 ~~~
 > sudo apt-get update
 > sudo apt-get install ghostscript
 ~~~
-```typescript
-const pdfConverter = new PDFConvert(buffer, false);
-```
-
-Here is an example if you have a specific location for the ghostscript binary:
-```typescript
-const pdfConverter = new PDFConvert(buffer, "/somedir/ghostscript_dir");
-```
 
 ---
 ## Examples

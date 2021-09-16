@@ -18,15 +18,14 @@ export default class PDFConvert {
      * @param source Can be either the buffer of the data, or a web url of the file
      * @param ghostscriptPath ghostScript path, if not specified, then it will use the included Windows Version
      */
-    constructor(source: Buffer | string, ghostscriptPath?: string | false) {
+    constructor(source: Buffer | string) {
+
         this.source = source;
 
-        if(ghostscriptPath !== undefined && ghostscriptPath !== false)
-            process.env.Path += ";" + ghostscriptPath;
-        else if(ghostscriptPath === undefined)
+        if(process.platform === "win32")
             process.env.Path += ";" + this.ghostscriptPath;
 
-    }
+    }//end ()
 
     
     public convertPageToImage = (page: number): Promise<Buffer> => new Promise((resolve, reject) => {
