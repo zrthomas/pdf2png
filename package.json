@@ -1,6 +1,6 @@
 {
   "name": "pdf2png-ts",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Takes a PDF-document and converts and delivers a PNG (Typescript Support and simplified dependencies)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,11 +23,11 @@
     "@types/axios": "^0.14.0",
     "@types/node": "^16.9.1",
     "@types/tmp": "^0.2.1",
+    "gulp": "^4.0.2",
     "typescript": "^4.4.3"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
+    "build": "tsc && gulp copy-executables",
     "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
