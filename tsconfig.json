@@ -10,9 +10,8 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "lib": ["ES2016"],
-    "typeRoots": ["./node_modules/@types/"],
+    "lib": ["ES2016"]
   },
-  "include": ["src", "test"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }
