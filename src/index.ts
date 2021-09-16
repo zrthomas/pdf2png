@@ -11,17 +11,21 @@ export default class PDFConvert {
     options: any;
     source: Buffer | string;
     tempLocation: string | undefined;
-    ghostscriptPath = path.join(__dirname, "executables", "ghostScript");
+    ghostscriptPath: string | undefined = path.join(__dirname, "executables", "ghostScript");
 
     /**
      * Constructs a new Convert Object
      * @param source Can be either the buffer of the data, or a web url of the file
-     * @param options ghostScript Options
+     * @param ghostscriptPath ghostScript path, if not specified, then it will use the included Windows Version
      */
-    constructor(source: Buffer | string, options?: any) {
+    constructor(source: Buffer | string, ghostscriptPath?: string | false) {
         this.source = source;
-        this.options = options;
-        process.env.Path += ";" + this.ghostscriptPath;
+
+        if(ghostscriptPath !== undefined && ghostscriptPath !== false)
+            process.env.Path += ";" + ghostscriptPath;
+        else if(ghostscriptPath === undefined)
+            process.env.Path += ";" + this.ghostscriptPath;
+
     }
 
     

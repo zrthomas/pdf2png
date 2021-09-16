@@ -1,7 +1,7 @@
-Pdf2PNG (Typescript Support)
-============
+# Pdf2PNG (Typescript Support)
 
-Install:
+
+## Install
 ```
 npm install pdf2png-ts
 ```
@@ -11,16 +11,30 @@ This is based on another project. (https://github.com/Inkognitoo/Pdf2Png)
 
 This version uses typescript and promises to greatly simplify usage since the old module is almost 7 years old.
 
-This project uses ghostscript, but there's no need to install it (if you use windows).
-If you want the module to use a local installation of ghostscript, set the option useLocalGhostscript true.
+---
+## Setup
+### Windows
+No additional setup is needed for Windows
 
-Tested on Windows/Tested on AZURE
-Tested Ubuntu 14.04
+### Linux
+If you want to use it with linux, you will need to install ghostscript and pass the executable location as the second argument to the constructor.
+If ghostscript is installed globaly and can be accessed by simply specifying "gs" in a shell terminal, then pass "false" to the argument
+Here is an example if you install ghostscript using debian/ubuntu apt and its accessable globally:
+~~~
+> sudo apt-get update
+> sudo apt-get install ghostscript
+~~~
+```typescript
+const pdfConverter = new PDFConvert(buffer, false);
+```
 
-If you want to use it with linux, you may replace the ghostscript-executable with something that works with linux.
-Or you install ghostscript for linux.
-http://www.ghostscript.com/
+Here is an example if you have a specific location for the ghostscript binary:
+```typescript
+const pdfConverter = new PDFConvert(buffer, "/somedir/ghostscript_dir");
+```
 
+---
+## Examples
 here some examples how to use:
 
 ```typescript
