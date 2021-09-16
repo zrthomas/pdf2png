@@ -1,6 +1,6 @@
 {
   "name": "pdf2png-ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Takes a PDF-document and converts and delivers a PNG (Typescript Support and simplified dependencies)",
   "main": "dist/pdf2png.js",
   "types": "dist/index.d.ts",
