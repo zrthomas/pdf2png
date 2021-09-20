@@ -3,6 +3,7 @@ import path from "path";
 import tmp from "tmp";
 import axios from "axios";
 import { readFile, unlink, writeFile } from "fs/promises";
+import { createWriteStream } from "fs";
 
 
 
@@ -96,38 +97,45 @@ export default class PDFConvert {
 
         let file: Buffer;
 
-        // If this is a web path then use axios to fetch the file
-        if(typeof(this.source) === "string") {
-            
-            try {
-
-                const response = await axios({
-                    url: this.source,
-                    method: 'GET',
-                    responseType: 'blob'
-                })
-
-                file = response.data;
-
-            } catch (e) {
-                return reject("Unable to fetch file from web location: " + e);
-            }//end try catch
-
-        } else {
-            file = this.source;
-        }//end if else
-
         tmp.file({}, async (err, name, fd) => {
 
             if(err)
                 return reject(`Unable to open tmp file: ` + err);
 
-            try {
-                await writeFile(name, file);
-                return resolve(name);
-            } catch (e) {
-                return reject(`Unable to write tmp file: ` + e);
-            }//end try catch
+            // If this is a web path then use axios to fetch the file
+            if(typeof(this.source) === "string") {
+                
+                try {
+
+                    const response = await axios({
+                        url: this.source,
+                        method: 'GET',
+                        responseType: 'stream'
+                    })
+
+                    // const createWriteStream(name);
+                    // file = response.data;
+
+                    const stream = createWriteStream(name)
+                    response.data.pipe(stream);
+                    stream.on('finish', () => {
+                        return resolve(name);
+                    })
+
+                } catch (e) {
+                    return reject("Unable to fetch file from web location: " + e);
+                }//end try catch
+
+            } else {
+
+                try {
+                    await writeFile(name, file);
+                    return resolve(name);
+                } catch (e) {
+                    return reject(`Unable to write tmp file: ` + e);
+                }//end try catch
+
+            }//end if else
 
         })
 

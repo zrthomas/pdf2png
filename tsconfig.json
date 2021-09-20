@@ -2,15 +2,13 @@
   "compilerOptions": {
     "declaration": true,
     "strictNullChecks": true,
+    "esModuleInterop":true,
     "target": "es6",
     "module": "commonjs",
     "outDir": "dist",                    
     "strict": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
     "sourceMap": true,
-    "lib": ["ES2016"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
