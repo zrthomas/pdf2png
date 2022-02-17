@@ -95,8 +95,6 @@ export default class PDFConvert {
      */
     private writePDFToTemp = (): Promise<string> => new Promise( async (resolve, reject) => {
 
-        let file: Buffer;
-
         tmp.file({}, async (err, name, fd) => {
 
             if(err)
@@ -129,7 +127,7 @@ export default class PDFConvert {
             } else {
 
                 try {
-                    await writeFile(name, file);
+                    await writeFile(name, this.source);
                     return resolve(name);
                 } catch (e) {
                     return reject(`Unable to write tmp file: ` + e);
