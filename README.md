@@ -23,6 +23,12 @@ If you want to use it with linux, you will need to install ghostscript via your 
 > sudo apt-get install ghostscript
 ~~~
 
+### Mac OSX
+You will need to install ghostscript on mac using brew
+~~~
+brew install ghostscript
+~~~
+
 ---
 ## Examples
 here some examples how to use:

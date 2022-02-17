@@ -4,7 +4,7 @@ const PDFConvert = require ("../dist/index.js").default;
 
 // const buffer = readFileSync("multipage.pdf");
 
-const pdfConverter = new PDFConvert("https://acplrollandcenterblob.blob.core.windows.net/cms-assets/436dd470-b1cf-11eb-936b-75a3a36a6a90.pdf");
+const pdfConverter = new PDFConvert("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
 
 pdfConverter.getPageCount()
     .then(pages => {
