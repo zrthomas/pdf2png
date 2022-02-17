@@ -38,7 +38,7 @@ export default class PDFConvert {
 
             try {
 
-                const cmd = `gs -dQUIET -dPARANOIDSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=png16m -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r100 -dFirstPage=${page} -dLastPage=${page} -sOutputFile=${name} ${this.tempLocation}`
+                const cmd = `gs -dQUIET -dPARANOIDSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=png16m -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r300 -dFirstPage=${page} -dLastPage=${page} -sOutputFile=${name} ${this.tempLocation}`
                 exec(cmd, async (err, stdout, stderr) => {
 
                     if(err)
