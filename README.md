@@ -1,61 +1,74 @@
-# Pdf2PNG (Typescript Support)
+# pdf2png
 
+This is a fork of [tr3ysmith/Pdf2Png](https://github.com/tr3ysmith/Pdf2Png).
+Along with the usage of TypeScript and promises, this version:
+
+- adds support to read PDF file from local file system
+- properly compiles to both CommonJS and ESM
 
 ## Install
+
+```bash
+$ npm install @brakebein/pdf2png
 ```
-npm install pdf2png-ts
-```
 
-
-This is based on another project. (https://github.com/Inkognitoo/Pdf2Png)
-
-This version uses typescript and promises to greatly simplify usage since the old module is almost 7 years old.
-
----
 ## Setup
+
 ### Windows
-No additional setup is needed for Windows, ghostscript is included with this package
+
+No additional setup is needed for Windows, ghostscript is included with this package.
 
 ### Linux
+
 If you want to use it with linux, you will need to install ghostscript via your package manager.
-~~~
-> sudo apt-get update
-> sudo apt-get install ghostscript
-~~~
+
+```bash
+$ sudo apt-get update
+$ sudo apt-get install ghostscript
+```
 
 ### Mac OSX
-You will need to install ghostscript on mac using brew
-~~~
-brew install ghostscript
-~~~
 
----
-## Examples
-here some examples how to use:
+You will need to install ghostscript on Mac using brew.
+
+```bash
+$ brew install ghostscript
+```
+
+## Usage
 
 ```typescript
+import { PdfConvert, PdfConvertOptions } from '@brakebein/pdf2png';
 
-// Create a PDFConvert Object to use for the each pdf file
-// Buffer
-const pdfConverter = new PDFConvert(buffer);
-// OR web url
-const pdfConverter = new PDFConvert("http://example.com/example.pdf");
+// create a PdfConvert object for a PDF file
+// using a Buffer
+const pdfConverter = new PdfConvert(buffer);
+// using a Web url
+const pdfConverter = new PdfConvert('https://example.com/example.pdf');
+// using a local file
+const pdfConverter = new PdfConvert('./folder/example.pdf');
 
-// Get the page count of the PDF (this returns a promise)
-const pages = await pdfConverter.getPageCount()
+// pass options
+const options: PdfConvertOptions = {
+  // resolution of the output image in dpi
+  resolution: 600,
+  // path to ghostscript bin directory (only Windows)
+  // defaults to executable shipped with this package
+  ghostscriptPath: 'path/to/gs/bin'
+};
+const pdfConverter = new PdfConvert('./folder/example.pdf', options);
 
-// Get page 1 as a PNG Image Buffer
-const buffer = await pdfConverter.convertPageToImage(1)
+// get the number of pages of the PDF
+const pages = await pdfConverter.getPageCount();
+
+// get page 1 as a PNG Image Buffer
+const buffer = await pdfConverter.convertPageToImage(1);
 await fs.writeFile("example_page1.png", buffer);
 
-/**
- * Make sure you always clean the converter object when you're done using it, 
- * Otherwise the pdf tmp file will not be removed.
- * 
- * Having to manually call clean allows you to run multiple operations on the same tmp file
- * and reduces latency with having to refetch and write the pdf to a tmp location on every
- * call.
- */
-pdfConverter.clean()
-
+// Dispose the converter object when you're done using it, 
+// otherwise the pdf tmp file will not be removed
+// (but should be automatically removed on process exit).
+// To manually call `dispose()` allows you to run multiple operations
+// within long-living processes, e.g. backend server, without piling up tmp files.
+pdfConverter.dispose();
 ```
