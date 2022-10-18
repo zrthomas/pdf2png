@@ -1,3 +1,6 @@
 /node_modules
 dist
+types
+/test/*.png
 /npm-debug.log
+.idea

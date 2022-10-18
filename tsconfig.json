@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "strictNullChecks": true,
-    "esModuleInterop":true,
-    "target": "es6",
-    "module": "commonjs",
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "node",
     "outDir": "dist",                    
     "strict": true,
-    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "removeComments": false,
     "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "es2018"
+    ]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "dist", "types"]
 }
