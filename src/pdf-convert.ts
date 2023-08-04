@@ -1,9 +1,8 @@
-import { URL } from 'node:url';
+import axios from 'axios';
+import tmp, { FileResult } from 'tmp-promise';
+import { exec, execFile } from 'child-process-promise';
 import { copyFile, readFile, writeFile } from 'node:fs/promises';
 import { createWriteStream } from 'node:fs';
-import { exec, execFile } from 'child-process-promise';
-import tmp, { FileResult } from 'tmp-promise';
-import axios from 'axios';
 
 export interface PdfConvertOptions {
   /**
@@ -15,11 +14,11 @@ export interface PdfConvertOptions {
    * Path to ghostscript bin directory.
    * @default Included Windows version
    */
-  ghostscriptPath?: string;
+  ghostscriptPath?: string | undefined;
 }
 
 export class PdfConvert {
-  private readonly options: Required<PdfConvertOptions>;
+  private readonly options: PdfConvertOptions;
 
   private readonly source: Buffer | string;
 
@@ -34,11 +33,11 @@ export class PdfConvert {
     this.source = source;
 
     this.options = {
-      resolution: 600,
-      ghostscriptPath: new URL(
-        './executables/ghostscript',
-        import.meta.url,
-      ).pathname.replace(/^\//, ''),
+      resolution: 200,
+      // ghostscriptPath: new URL(
+      //   './executables/ghostscript',
+      //   import.meta.url,
+      // ).pathname.replace(/^\//, ''),
       ...options,
     };
 
@@ -89,6 +88,53 @@ export class PdfConvert {
       await tmpImage.cleanup();
 
       return buffer;
+    } catch (err) {
+      throw new Error('Unable to process image from page: ' + err);
+    }
+  }
+
+  /**
+   * Convert a page to a png image.
+   * @param start Page number
+   * @param end Page number
+   * @return png image as path array
+   */
+  async convertPageRangeToImages(
+    start: number,
+    end: number,
+  ): Promise<string[]> {
+    await this.writePDFToTemp();
+    if (!this.tmpFile) {
+      throw new Error('No temporary pdf file!');
+    }
+    let gs = 'gs';
+    if (process.platform === 'win32') {
+      gs = 'gswin64c';
+    }
+    try {
+      await execFile(gs, [
+        '-dQUIET',
+        '-dPARANOIDSAFER',
+        '-dBATCH',
+        '-dNOPAUSE',
+        '-dNOPROMPT',
+        '-sDEVICE=png16m',
+        '-dTextAlphaBits=4',
+        '-dGraphicsAlphaBits=4',
+        `-r${this.options.resolution}`,
+        `-r`,
+        `-dFirstPage=${start}`,
+        `-dLastPage=${end || start}`,
+        `-sOutputFile=page-%03d.png`,
+        this.tmpFile.path,
+      ]);
+      // return array of file paths
+      const files = [];
+      for (let i = start; i <= end; i++) {
+        files.push(`page-${i.toString().padStart(3, '0')}.png`);
+      }
+      await this.tmpFile.cleanup();
+      return files;
     } catch (err) {
       throw new Error('Unable to process image from page: ' + err);
     }
