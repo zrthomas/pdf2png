@@ -7,7 +7,7 @@ import { createWriteStream } from 'node:fs';
 export interface PdfConvertOptions {
   /**
    * Resolution of the output image in dpi.
-   * @default 600
+   * @default 200
    */
   resolution?: number;
   /**
@@ -67,8 +67,11 @@ export class PdfConvert {
 
     try {
       const tmpImage = await tmp.file();
-
-      await execFile('gs', [
+      let gs = 'gs';
+      if (process.platform === 'win32') {
+        gs = 'gswin64c';
+      }
+      await execFile(gs, [
         '-dQUIET',
         '-dPARANOIDSAFER',
         '-dBATCH',
@@ -86,7 +89,7 @@ export class PdfConvert {
 
       const buffer = await readFile(tmpImage.path);
       await tmpImage.cleanup();
-
+      await this.tmpFile.cleanup();
       return buffer;
     } catch (err) {
       throw new Error('Unable to process image from page: ' + err);
@@ -150,10 +153,14 @@ export class PdfConvert {
     if (!this.tmpFile) {
       throw new Error('No temporary pdf file!');
     }
+    let gs = 'gs';
+    if (process.platform === 'win32') {
+      gs = 'gswin64c';
+    }
 
     try {
       const { stdout } = await exec(
-        `gs -q -dNODISPLAY -c "(${this.tmpFile.path.replace(
+        `${gs} -q -dNODISPLAY -c "(${this.tmpFile.path.replace(
           /\\/g,
           '/',
         )}) (r) file runpdfbegin pdfpagecount = quit"`,
